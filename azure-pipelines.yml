@@ -12,6 +12,15 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+stages:
+- stage: test1
+  jobs:
+  - job: build
+    steps:
+      - script: dotnet build --configuration $(buildConfiguration)
+        displayName: 'dotnet build $(buildConfiguration)'
+
+- stage: test2
+  jobs:
+  - job:
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test-build'))
