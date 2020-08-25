@@ -21,6 +21,6 @@ stages:
         displayName: 'dotnet build $(buildConfiguration)'
 
 - stage: test2
+  condition: and(succeeded(), endswith(variables['Build.SourceBranchName'], 'test-build'))
   jobs:
   - job:
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test-build'))
